@@ -1,0 +1,54 @@
+@import "src/variables";
+
+.track {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 20px;
+    color: $light-grey;
+    transition: color 0.2s;
+
+    &.active {
+      color: white;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      background-color: transparent;
+      border: 1px solid $grey;
+      border-radius: 5px;
+      color: white;
+      font-family: "Source Sans Pro", sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      &:hover {
+        border-color: white;
+      }
+
+      &.active {
+        background-color: white;
+        color: $strong-black;
+        border-color: white;
+      }
+    }
+  }
+}

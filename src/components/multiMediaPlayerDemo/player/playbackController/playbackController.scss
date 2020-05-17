@@ -1,0 +1,20 @@
+@import "src/variables";
+
+.playback-controller {
+  button {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background-color: transparent;
+    border: 2px solid $light-grey;
+    color: $light-grey;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+
+    &:hover,
+    &.active {
+      color: white;
+      border-color: white;
+    }
+  }
+}

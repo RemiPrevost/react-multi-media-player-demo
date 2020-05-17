@@ -1,6 +1,6 @@
-import { transitions as machineTransitions } from "machine/transitions";
-import { transitions as pauseTransitions } from "machine/pause/transitions";
-import { transitionsFactory as mediaTransitionFactory } from "machine/loading/media/transitions";
+import { transitions as machineTransitions } from "components/multiMediaPlayer/machine/transitions";
+import { transitions as pauseTransitions } from "components/multiMediaPlayer/machine/pause/transitions";
+import { transitionsFactory as mediaTransitionFactory } from "components/multiMediaPlayer/machine/loading/media/transitions";
 
 export const addEventListeners = (ref, id, send) => {
   const { END_REACHED, PAUSE_PRESSED } = machineTransitions;

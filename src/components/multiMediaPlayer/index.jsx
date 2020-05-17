@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useMachine } from "@xstate/react";
 
 import { MachineContext } from "context";
 
-import { machineFactory } from "machine";
+import { machineFactory } from "components/multiMediaPlayer/machine";
 
-import { Controller } from "./controller";
-import { MixTable } from "./mixTable";
+import { Audios } from "./audios";
 
-import "./multiMediaPlayer.scss";
+import { states } from "./machine/states";
+import { transitions as pauseTransitions } from "./machine/pause/transitions";
+import { transitions as machineTransitions } from "./machine/transitions";
 
-export function MultiMediaPlayer({ audios }) {
+const { playing } = states;
+const { PLAY_PRESSED } = pauseTransitions;
+const { PAUSE_PRESSED } = machineTransitions;
+
+export function MultiMediaPlayer({ audios, children }) {
   const [machineReady, setMachineReady] = useState(false);
 
   const machine = useMachine(machineFactory(audios.map(({ id }) => id)));
 
-  const [, , service] = machine;
+  const [current, send, service] = machine;
   useEffect(() => {
     const subscription = service.subscribe(({ context, event, value }) => {
       // simple state logging
@@ -29,16 +34,17 @@ export function MultiMediaPlayer({ audios }) {
     return subscription.unsubscribe;
   }, [service]);
 
+  const isPlaying = current.matches(playing);
+  const play = useCallback(() => send(PLAY_PRESSED), [send]);
+  const pause = useCallback(() => send(PAUSE_PRESSED), [send]);
   return (
     <MachineContext.Provider value={machine}>
-      <div className="audio-player-container">
-        {machineReady && (
-          <>
-            <Controller />
-            <MixTable tracks={audios} />
-          </>
-        )}
-      </div>
+      {machineReady && (
+        <>
+          {children({ audios, isPlaying, pause, play })}
+          <Audios tracks={audios} />
+        </>
+      )}
     </MachineContext.Provider>
   );
 }

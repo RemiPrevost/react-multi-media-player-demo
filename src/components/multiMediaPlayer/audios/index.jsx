@@ -2,9 +2,7 @@ import React, { useEffect, useMemo } from "react";
 
 import { Audio } from "./audio";
 
-import "./mixTable.scss";
-
-export function MixTable({ tracks }) {
+export function Audios({ tracks }) {
   const audioContext = useMemo(
     () => new (window.AudioContext || window.webkitAudioContext)(),
     []
@@ -20,7 +18,7 @@ export function MixTable({ tracks }) {
   }, [audioContext, masterGainNode]);
 
   return (
-    <div className="mix-table-container">
+    <>
       {tracks.map((track) => (
         <Audio
           {...track}
@@ -29,6 +27,6 @@ export function MixTable({ tracks }) {
           masterGain={masterGainNode}
         />
       ))}
-    </div>
+    </>
   );
 }

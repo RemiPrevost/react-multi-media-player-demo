@@ -8,11 +8,9 @@ import React, {
 
 import { MachineContext } from "context";
 
-import { transitionsFactory } from "machine/loading/media/transitions";
+import { transitionsFactory } from "components/multiMediaPlayer/machine/loading/media/transitions";
 
 import { addEventListeners } from "./eventListeners";
-
-import "./audio.scss";
 
 export function Audio({ audioContext, file, id, masterGain, name }) {
   const ref = useRef(null);
@@ -54,10 +52,6 @@ export function Audio({ audioContext, file, id, masterGain, name }) {
 
   return (
     <div className="audio-container">
-      {name}
-      <button type="button" onClick={toggleMute}>
-        {muted ? "Unmute" : "Mute"}
-      </button>
       <audio preload="auto" ref={ref} mediaGroup="audio">
         <source src={file} />
       </audio>
