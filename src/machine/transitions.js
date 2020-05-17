@@ -1,0 +1,5 @@
+export const transitions = {
+  END_REACHED: "END_REACHED",
+  MEDIA_READY: "MEDIA_READY",
+  PAUSE_PRESSED: "PAUSE_PRESSED",
+};

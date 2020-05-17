@@ -1,0 +1,27 @@
+{
+  "extends": ["react-app", "airbnb", "plugin:prettier/recommended"],
+  "rules": {
+    "no-param-reassign": [
+      "error",
+      { "props": false }
+    ],
+
+    /** JSX-A11Y **/
+    "jsx-a11y/media-has-caption": "off",
+
+    /** IMPORT **/
+    "import/prefer-default-export": "off",
+
+    /** REACT **/
+    "react/jsx-curly-newline": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  }
+}

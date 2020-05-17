@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# ide
+.idea
+
+# BEFORE GETTING AUTHORIZATION FROM THE AUTHOR
+src/assets/audios
+src/assets/videos
