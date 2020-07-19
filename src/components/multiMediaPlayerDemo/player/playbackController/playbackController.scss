@@ -1,20 +1,50 @@
 @import "src/variables";
 
 .playback-controller {
-  button {
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    background-color: transparent;
-    border: 2px solid $light-grey;
-    color: $light-grey;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
+  width: 100%;
 
-    &:hover,
-    &.active {
-      color: white;
-      border-color: white;
+  .top,
+  .bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .top {
+    margin-bottom: 10px;
+
+    button {
+      background-color: transparent;
+      border: none;
+      color: $white;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+
+      svg {
+        font-size: 35px;
+      }
+    }
+  }
+
+  .bottom {
+    .progress-bar-container {
+      flex: 1 1 auto;
+      margin: 0 10px;
+      height: 6px;
+      background-color: $light-grey;
+      border-radius: 5px;
+      overflow: hidden;
+      cursor: pointer;
+
+      .progress-bar {
+        height: 100%;
+        border-radius: 5px;
+        background-color: $white;
+      }
     }
   }
 }

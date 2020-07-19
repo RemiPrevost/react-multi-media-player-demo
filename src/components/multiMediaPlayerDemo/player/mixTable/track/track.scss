@@ -18,7 +18,7 @@
     transition: color 0.2s;
 
     &.active {
-      color: white;
+      color: $white;
     }
   }
 
@@ -30,7 +30,7 @@
       background-color: transparent;
       border: 1px solid $grey;
       border-radius: 5px;
-      color: white;
+      color: $white;
       font-family: "Source Sans Pro", sans-serif;
       font-size: 13px;
       cursor: pointer;
@@ -41,13 +41,13 @@
       }
 
       &:hover {
-        border-color: white;
+        border-color: $white;
       }
 
       &.active {
-        background-color: white;
+        background-color: $white;
         color: $strong-black;
-        border-color: white;
+        border-color: $white;
       }
     }
   }

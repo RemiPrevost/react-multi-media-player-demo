@@ -1,30 +1,17 @@
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 
 import { Audio } from "./audio";
 
-export function Audios({ tracks }) {
-  const audioContext = useMemo(
-    () => new (window.AudioContext || window.webkitAudioContext)(),
-    []
-  );
-
-  const masterGainNode = useMemo(() => audioContext.createGain(), [
-    audioContext,
-  ]);
-
-  useEffect(() => {
-    masterGainNode.connect(audioContext.destination);
-    masterGainNode.gain.value = 1;
-  }, [audioContext, masterGainNode]);
-
+export function Audios({ addEventListeners, audioContext, tracks }) {
   return (
     <>
-      {tracks.map((track) => (
+      {Object.entries(tracks).map(([id, track]) => (
         <Audio
           {...track}
+          addEventListeners={addEventListeners}
           audioContext={audioContext}
+          id={`audio-${id}`}
           key={track.name}
-          masterGain={masterGainNode}
         />
       ))}
     </>

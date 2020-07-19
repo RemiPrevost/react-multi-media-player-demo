@@ -1,24 +1,23 @@
 import { Machine } from "xstate";
 
 import { states } from "./states";
-import { states as pauseState } from "./pause/states";
 
-import { transitions } from "./transitions";
+import {
+  alreadyBuffered,
+  alreadyRegistered,
+} from "./playback/loading/media/guards";
+import { allMediaRegistered } from "./playback/guards";
 
-import { loadingStates } from "./loading";
-import { pauseStates } from "./pause";
+import { pauseAction, playAction } from "./playback/actions";
 
-import { alreadyBuffered, alreadyRegistered } from "./loading/media/guards";
-import { allMediaRegistered } from "./guards";
+import { playbackStates } from "./playback";
+import { gainsStates } from "./gains";
 
-import { pauseAction, playAction } from "./actions";
+const { gains, playback } = states;
 
-const { loading, pause, playing } = states;
-const { history, userRequest } = pauseState;
-const { END_REACHED, MEDIA_READY, PAUSE_PRESSED } = transitions;
-
-export const machineFactory = (mediaIds) => {
+export const machineFactory = (audioIds) => {
   const medias = {};
+  const mediaIds = [...audioIds, "video"];
   mediaIds.forEach((id) => {
     medias[id] = {
       ref: null,
@@ -30,29 +29,18 @@ export const machineFactory = (mediaIds) => {
     {
       id: "multi-media-player",
       context: {
+        audioContext: new (window.AudioContext || window.webkitAudioContext)(),
+        currentTime: 0,
+        duration: undefined,
         medias,
       },
-      initial: loading,
+      type: "parallel",
       states: {
-        [loading]: {
-          ...loadingStates(mediaIds),
-          on: {
-            [MEDIA_READY]: {
-              target: `${pause}.${history}`,
-              cond: "allMediaRegistered",
-            },
-          },
+        [playback]: {
+          ...playbackStates(mediaIds),
         },
-        [pause]: {
-          ...pauseStates,
-        },
-        [playing]: {
-          entry: "playAction",
-          exit: "pauseAction",
-          on: {
-            [PAUSE_PRESSED]: `${pause}.${userRequest}`,
-            [END_REACHED]: `${pause}.${userRequest}`,
-          },
+        [gains]: {
+          ...gainsStates(mediaIds),
         },
       },
     },
